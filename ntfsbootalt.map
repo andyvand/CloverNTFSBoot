@@ -1,0 +1,62 @@
+Open Watcom Linker Version 2.0 beta Apr  2 2015 10:32:17 (32-bit)
+Copyright (c) 2002-2015 The Open Watcom Contributors. All Rights Reserved.
+Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
+Created on:       16/02/09 21:25:57
+Executable Image: ntfsbootalt.com
+creating a DOS .COM executable
+
+
+                        +------------+
+                        |   Groups   |
+                        +------------+
+
+Group                           Address              Size
+=====                           =======              ====
+
+
+
+
+                        +--------------+
+                        |   Segments   |
+                        +--------------+
+
+Segment                Class          Group          Address         Size
+=======                =====          =====          =======         ====
+
+BOOTCODE                              AUTO           0000:0000       00002000
+
+
+                        +-----------------------+
+                        |   Absolute Segments   |
+                        +-----------------------+
+
+Segment                 Class           Address              Size
+=======                 =====           =======              ====
+
+BOOTSEG                                 07c0:0000           00000000
+NEWSEG                                  0d00:0000           00000000
+LDRSEG                                  2000:0000           00000000
+
+
+                        +----------------+
+                        |   Memory Map   |
+                        +----------------+
+
+* = unreferenced symbol
++ = symbol only referenced locally
+
+Address        Symbol
+=======        ======
+
+Module: ntfsbootalt.obj(ntfsbootalt.asm)
+0000:0000*     cstart
+
+
+                        +-----------------------+
+                        |   Linker Statistics   |
+                        +-----------------------+
+
+Stack size:  1000 (4096.)
+Memory size:  2000 (8192.)
+Entry point address: 0000:0000
+Link time: 00:00.09
