@@ -304,9 +304,9 @@ ReservedForFuture DB    2 dup(?) ;reserve remaining bytes to prevent NLS
 ;   boot_name is the name itself.  Note that it is not NULL
 ;   terminated, and doesn't need to be.
 ;
-boot_name_length   dw  4
+boot_name_length   dw  5
 boot_name          dw  'B', 'O', 'O', 'T'
-boot_alt           db  0
+boot_alt           db  'C'
                    db  0
 
 ntldr_name_length   dw  5
@@ -551,9 +551,9 @@ mainboot30:
        ; Check for 'N'
        cmp             al, 6Eh                                                 ; 'N', do ntldr
        jz              .ntldrFileSet
-       cmp             al, 0
-       jz              .bootFileSet
-       mov             boot_name_length, 5
+       ; cmp             al, 0
+       ; jz              .bootFileSet
+       ; mov             boot_name_length, 5
        jmp             .bootFileSet                              ; try to boot
 
 .wait:
