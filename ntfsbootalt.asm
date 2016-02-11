@@ -538,7 +538,7 @@ mainboot30:
 ;
        mov             cx, 2000                                                ; loop counter = max 2000 miliseconds in total
 .loop:
-       mov             ah, 01                                                ; int 0x16, Func 0x01 - get keyboard status/preview key
+       mov             ah, 01                                                  ; int 0x16, Func 0x01 - get keyboard status/preview key
        int             16h
        jz              .wait                                                   ; no keypress - wait and loop again
        xor             ah, ah                                                  ; read the char from buffer to spend it
@@ -546,10 +546,10 @@ mainboot30:
        ; have a key - ASCII is in al - put it to file name /boot<pressed key>
        mov             boot_alt, al
        ; Check for 'B'
-       cmp             ax, 62h                                                 ; 'B', do bootmgr
+       cmp             al, 62h                                                 ; 'B', do bootmgr
        jz              .bootmgrFileSet
        ; Check for 'N'
-       cmp             ax, 6Eh                                                 ; 'N', do ntldr
+       cmp             al, 6Eh                                                 ; 'N', do ntldr
        jz              .ntldrFileSet
        cmp             al, 0
        jz              .bootFileSet
