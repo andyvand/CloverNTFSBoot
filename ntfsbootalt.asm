@@ -301,13 +301,19 @@ ReservedForFuture DB    2 dup(?) ;reserve remaining bytes to prevent NLS
         db      55h,0aah
 
 ;   Name we look for.  ntldr_length is the number of characters,
-;   ntldr_name is the name itself.  Note that it is not NULL
+;   boot_name is the name itself.  Note that it is not NULL
 ;   terminated, and doesn't need to be.
 ;
-ntldr_name_length   dw  4
-ntldr_name          dw  'B', 'O', 'O', 'T'
-ntldr_alt           db  0
-                    db  0
+boot_name_length   dw  4
+boot_name          dw  'B', 'O', 'O', 'T'
+boot_alt           db  0
+                   db  0
+
+ntldr_name_length   dw  5
+ntldr_name          dw  'N', 'T', 'L', 'D', 'R'
+
+bootmgr_name_length dw  7
+bootmgr_name        dw  'B', 'O', 'O', 'T', 'M', 'G', 'R'
 
 ;   Predefined name for index-related attributes associated with an
 ;   index over $FILE_NAME
@@ -538,10 +544,16 @@ mainboot30:
        xor             ah, ah                                                  ; read the char from buffer to spend it
        int             16h
        ; have a key - ASCII is in al - put it to file name /boot<pressed key>
-       mov             ntldr_alt, al
+       mov             boot_alt, al
+       ; Check for 'B'
+       cmp             ax, 62h                                                 ; 'B', do bootmgr
+       jz              .bootmgrFileSet
+       ; Check for 'N'
+       cmp             ax, 6Eh                                                 ; 'N', do ntldr
+       jz              .ntldrFileSet
        cmp             al, 0
        jz              .bootFileSet
-       mov             ntldr_name_length, 5
+       mov             boot_name_length, 5
        jmp             .bootFileSet                              ; try to boot
 
 .wait:
@@ -558,11 +570,23 @@ mainboot30:
        ; change filename to /boot by putting space as 5th char
        ; and try to load
        ; mov           BYTE [gFileName + 4], ' '
+
+.ntldrFileSet:
+        movzx   ecx, ntldr_name_length ; ecx = name length in characters
+        mov     eax, offset ntldr_name ; eax -> name
+        jmp     FindTheFile
+
+.bootmgrFileSet:
+        movzx   ecx, bootmgr_name_length ; ecx = name length in characters
+        mov     eax, offset bootmgr_name ; eax -> name
+        jmp     FindTheFile
+
 .bootFileSet:
+        movzx   ecx, boot_name_length  ; ecx = name length in characters
+        mov     eax, offset boot_name  ; eax -> name
+        jmp     FindTheFile
 
-        movzx   ecx, ntldr_name_length  ; ecx = name length in characters
-        mov     eax, offset ntldr_name  ; eax -> name
-
+FindTheFile:
         call    FindFile
 
         or      eax, eax
