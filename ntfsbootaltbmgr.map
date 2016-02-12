@@ -1,8 +1,8 @@
 Open Watcom Linker Version 2.0 beta Apr  2 2015 10:32:17 (32-bit)
 Copyright (c) 2002-2015 The Open Watcom Contributors. All Rights Reserved.
 Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
-Created on:       16/02/12 08:51:35
-Executable Image: ntfsboot.com
+Created on:       16/02/12 08:51:42
+Executable Image: ntfsbootaltbmgr.com
 creating a DOS .COM executable
 
 
@@ -48,7 +48,7 @@ LDRSEG                                  2000:0000           00000000
 Address        Symbol
 =======        ======
 
-Module: ntfsboot.obj(ntfsboot.asm)
+Module: ntfsbootaltbmgr.obj(ntfsbootaltbmgr.asm)
 0000:0000*     cstart
 
 
@@ -59,4 +59,4 @@ Module: ntfsboot.obj(ntfsboot.asm)
 Stack size:  1000 (4096.)
 Memory size:  2000 (8192.)
 Entry point address: 0000:0000
-Link time: 00:01.91
+Link time: 00:00.22
